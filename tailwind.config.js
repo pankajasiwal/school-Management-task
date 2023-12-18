@@ -1,3 +1,5 @@
+const { redirect } = require('next/dist/server/api-utils');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,10 +11,15 @@ module.exports = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      colors: {
+        'background-btn-secondry': 'rgb(var(--background-btn-secondry) / <alpha-value>)',
+        'background-btn-primary': 'rgb(var(--background-btn-primary)/ <alpha-value>)',
+        'background-table-header-popup': 'rgb(var(--background-table-header-popup)/ <alpha-value>)',
+        'background-table-header': 'rgb(var(--background-table-header)/ <alpha-value>)',
       },
     },
   },
   plugins: [],
-}
+};
