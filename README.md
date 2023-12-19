@@ -1,4 +1,12 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Demo Link
+https://school-management-task.vercel.app/
+
+## Screen Shorts
+![image](https://github.com/pankajasiwal/school-Management-task/assets/82385773/cd90d2aa-69fa-4946-85ac-dde0bd70d1e2)
+![image](https://github.com/pankajasiwal/school-Management-task/assets/82385773/e6ac0b06-94b5-4636-b8a2-8495542012b5)
+![image](https://github.com/pankajasiwal/school-Management-task/assets/82385773/992c0cb7-a75e-4e44-9c93-bffe5de4c3f6)
+
 
 ## Getting Started
 
