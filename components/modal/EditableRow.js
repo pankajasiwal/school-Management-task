@@ -3,23 +3,13 @@ import { CiEdit } from 'react-icons/ci';
 import { IoIosClose } from 'react-icons/io';
 import { MdDone } from 'react-icons/md';
 
-export default function EditableRow({ id, initialSubject, initialDate, initialStartingTime, subjects, setData }) {
+export default function EditableRow({ id, initialSubject, initialDate, initialStartingTime, subjects, setPopupData }) {
   const [isEditable, setIsEditable] = useState(false);
   const subject = useRef();
   const date = useRef();
   const time = useRef();
 
   const editHandler = (id) => {
-    // const allsubjects = [...subjects];
-    // const editingRow = allsubjects.findIndex((subject) => subject.id == id);
-
-    // allsubjects[editingRow] = {
-    //   id: id,
-    //   subject: subject.current.value,
-    //   date: date.current.value,
-    //   startingTime: time.current.value,
-    // };
-
     const updatedSubjects = subjects.map((subjectItem) => {
       if (subjectItem.id === id) {
         return {
@@ -32,9 +22,12 @@ export default function EditableRow({ id, initialSubject, initialDate, initialSt
       return subjectItem;
     });
 
-    // setData()
-
-    console.log('after editing ', updatedSubjects);
+    setPopupData((prevData) => {
+      return {
+        ...prevData,
+        subjects: updatedSubjects,
+      };
+    });
   };
 
   const deleteHandler = (id) => {
@@ -42,7 +35,12 @@ export default function EditableRow({ id, initialSubject, initialDate, initialSt
     const deleteRowIndex = rows.findIndex((row) => row.id == id);
     rows.splice(deleteRowIndex, 1);
     console.log('after delete ', rows);
-    // setSubjects(rows);/
+    setPopupData((prevData) => {
+      return {
+        ...prevData,
+        subjects: rows,
+      };
+    });
   };
 
   let editableSubject = <span>{initialSubject}</span>;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Button({ children, type }) {
+export default function Button({ children, type, ...props }) {
   let classes = 'border-2 border-solid  px-6 py-1';
   if (type == 'DELETE') {
     classes +=
@@ -9,5 +9,9 @@ export default function Button({ children, type }) {
   } else if (type == 'ADD' || type == 'BACK' || type == 'UPDATE') {
     classes += ' ' + 'bg-background-btn-primary ';
   }
-  return <button className={classes}>{children}</button>;
+  return (
+    <button className={classes} {...props}>
+      {children}
+    </button>
+  );
 }

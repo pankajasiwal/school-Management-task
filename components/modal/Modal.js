@@ -1,16 +1,8 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import Button from '../Button';
-import EditableRow from './EditableRow';
 import TableBody from './TableBody';
 
-// const DUMMY_SUBJECTS = [
-//   { id: 1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-//   { id: 2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-// ];
-
-const Modal = forwardRef(function Modal({ selectedClass, setData }, ref) {
-  // const [selectedSubjects, setSelectedSubjects] = useState(selectedClass.subjects);
-
+const Modal = forwardRef(function Modal({ selectedClass, Data, setData, setPopupData }, ref) {
   const dialog = useRef();
   useImperativeHandle(ref, () => {
     return {
@@ -19,7 +11,22 @@ const Modal = forwardRef(function Modal({ selectedClass, setData }, ref) {
       },
     };
   });
-  console.log('popup ke ander ', selectedClass);
+
+  function updateHandler() {
+    console.log('inside update handler');
+    setData((prevData) => {
+      return Data.map((data) => {
+        if (data.id === selectedClass.selectedClassID) {
+          return {
+            ...data,
+            subjects: selectedClass.subjects,
+          };
+        }
+        return data;
+      });
+    });
+    dialog.current.close();
+  }
   return (
     <dialog id='modal' ref={dialog} className='w-full md:w-4/5 md:max-w-screen-lg'>
       <div className='px-4 py-2 md:px-8 md:py-4'>
@@ -29,26 +36,30 @@ const Modal = forwardRef(function Modal({ selectedClass, setData }, ref) {
         <div>
           <table className='w-full table-fixed border-separate border-spacing-y-3'>
             <thead>
-              <th className='bg-background-table-header-popup/80 font-medium'>Subject</th>
-              <th className='bg-background-table-header-popup/80 font-medium'>Dates</th>
-              <th className='bg-background-table-header-popup/80 font-medium'>Srarting Time</th>
-              <th></th>
+              <tr>
+                <th className='bg-background-table-header-popup/80 font-medium'>Subject</th>
+                <th className='bg-background-table-header-popup/80 font-medium'>Dates</th>
+                <th className='bg-background-table-header-popup/80 font-medium'>Srarting Time</th>
+                <th></th>
+              </tr>
             </thead>
             <TableBody
               subjects={selectedClass.subjects}
-              // setSubjects={setSelectedSubjects}
+              setPopupData={setPopupData}
               selectedClassID={selectedClass.selectedClassID}
               setData={setData}
             />
           </table>
         </div>
 
-        <form method='dialog' id='modal-actions'>
-          <div className='flex justify-around mt-[2.5rem]'>
-            <Button type='UPDATE'>Update</Button>
+        <div className='flex justify-around mt-9'>
+          <Button type='UPDATE' onClick={updateHandler}>
+            Update
+          </Button>
+          <form method='dialog' id='modal-actions'>
             <Button type='BACK'>Back</Button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </dialog>
   );

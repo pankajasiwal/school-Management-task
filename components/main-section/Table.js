@@ -2,72 +2,8 @@ import React, { useRef, useState } from 'react';
 import { IoMdEye, IoIosClose } from 'react-icons/io';
 import Modal from '../modal/Modal';
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    class: '10A',
-    startingDate: '20.9.2024',
-    totalPapers: 2,
-    subjects: [
-      { id: 1.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 1.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-  {
-    id: 2,
-    class: '10B',
-    startingDate: '21.9.2024',
-    totalPapers: 2,
-    subjects: [
-      { id: 2.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 2.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-  {
-    id: 3,
-    class: '11A',
-    startingDate: '20.9.2024',
-    totalPapers: 3,
-    subjects: [
-      { id: 3.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 3.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-  {
-    id: 4,
-    class: '11B',
-    startingDate: '21.9.2024',
-    totalPapers: 3,
-    subjects: [
-      { id: 4.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 4.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-  {
-    id: 5,
-    class: '12A',
-    startingDate: '20.9.2024',
-    totalPapers: 4,
-    subjects: [
-      { id: 5.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 5.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-  {
-    id: 6,
-    class: '12B',
-    startingDate: '21.9.2024',
-    totalPapers: 4,
-    subjects: [
-      { id: 6.1, subject: 'math', date: '2023-12-11', startingTime: '10:00 ' },
-      { id: 6.2, subject: 'english', date: '2023-11-10', startingTime: '11:00 ' },
-    ],
-  },
-];
-
-export default function Table() {
+export default function Table({ Data, setData }) {
   const modal = useRef();
-  const [Data, setData] = useState(DUMMY_DATA);
 
   const [popupData, setPopupData] = useState({
     selectedClassID: undefined,
@@ -83,7 +19,7 @@ export default function Table() {
   }
 
   function individualClassHandler(id) {
-    const selectedClass = DUMMY_DATA.find((obj) => obj.id == id);
+    const selectedClass = Data.find((obj) => obj.id == id);
     if (selectedClass !== undefined) {
       setPopupData({
         selectedClassID: selectedClass.id,
@@ -93,16 +29,18 @@ export default function Table() {
     }
     modal.current.open();
   }
-  console.log('popup ka data ', popupData);
+
   return (
     <>
-      <Modal ref={modal} selectedClass={popupData} setData={setData} />
+      <Modal ref={modal} selectedClass={popupData} Data={Data} setData={setData} setPopupData={setPopupData} />
       <table className='w-full table-auto border-separate'>
         <thead>
-          <th className='bg-background-table-header/60 font-medium'>Class</th>
-          <th className='bg-background-table-header/60 font-medium'>Starting date</th>
-          <th className='bg-background-table-header/60 font-medium'>Total Papers</th>
-          <th></th>
+          <tr>
+            <th className='bg-background-table-header/60 font-medium'>Class</th>
+            <th className='bg-background-table-header/60 font-medium'>Starting date</th>
+            <th className='bg-background-table-header/60 font-medium'>Total Papers</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
           {Data.map(({ id, class: className, startingDate, totalPapers }) => {
